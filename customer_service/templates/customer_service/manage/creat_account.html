@@ -1,0 +1,205 @@
+{% extends 'layout/admin.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'vendors/bootstrap-select/dist/css/bootstrap-select.min.css'%}">
+<link rel="stylesheet" href="{% static 'vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css'%}">
+{% endblock styles %}
+
+{% block left_subheader %}
+<h3 class="kt-subheader__title">Add CS</h3>
+<span class="kt-subheader__separator kt-hidden"></span>
+<div class="kt-subheader__breadcrumbs">
+    <a href="#" class="kt-subheader__breadcrumbs-home">
+        <i class="flaticon2-shelter"></i>
+    </a>
+    <span class="kt-subheader__breadcrumbs-separator"></span>
+    <a href="{% url 'customer_service:manage_list' %}" class="kt-subheader__breadcrumbs-link">CS Accounts</a>
+</div>
+{% endblock left_subheader %}
+
+
+{% block content %}
+<form method="post" class="kt-form">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-6">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">Personail Informaion</h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="col-form-label">English First Name</label>
+                            {{form.first_name_en|add_class:"form-control"|add_error_class:"is-invalid"}}
+                            {% for error in form.first_name_en.errors %}
+                            <div class="invalid-feedback">{{error}}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="col-form-label">Arabic First Name</label>
+                            {{form.first_name_ar|add_class:"form-control"|add_error_class:"is-invalid"}}
+                            {% for error in form.first_name_ar.errors %}
+                            <div class="invalid-feedback">{{error}}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="col-form-label">English Last Name</label>
+                            {{form.last_name_en|add_class:"form-control"|add_error_class:"is-invalid"}}
+                            {% for error in form.last_name_en.errors %}
+                            <div class="invalid-feedback">{{error}}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="col-form-label">Arabic Last Name</label>
+                            {{form.last_name_ar|add_class:"form-control"|add_error_class:"is-invalid"}}
+                            {% for error in form.last_name_ar.errors %}
+                            <div class="invalid-feedback">{{error}}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Email</label>
+                        {{form.email|add_class:"form-control"|add_error_class:"is-invalid"}}
+                        {% for error in form.email.errors %}
+                        <div class="invalid-feedback">{{error}}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Gender</label>
+                        {{form.gender|add_class:"form-control kt-selectpicker"|attr:"placeholder:Enter User Password"|add_error_class:"is-invalid"}}
+                        {% for error in form.gender.errors %}
+                        <div class="invalid-feedback">{{error}}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Birth Date</label>
+                        <div class="input-group date">
+                            {{form.birth_date|add_class:"form-control"|attr:"id:kt_datepicker_4_1"|add_error_class:"is-invalid"|attr:"readonly"}}
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                        {% for error in form.birth_date.errors %}
+                        <div class="invalid-feedback">{{error}}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="kt-portlet">
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="reset" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">Account Informaion</h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="form-group">
+                        <label class="col-form-label">User Name</label>
+                        {{form.username|add_class:"form-control"|attr:"placeholder:Enter User Name"|add_error_class:"is-invalid"}}
+                        {% for error in form.username.errors %}
+                        <div class="invalid-feedback">{{error}}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Phone Number</label>
+                        {{form.phone_number|add_class:"form-control"|attr:"placeholder:Enter User Phone Number"|add_error_class:"is-invalid"}}
+                        {% for error in form.phone_number.errors %}
+                        <div class="invalid-feedback">{{error}}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Password</label>
+                        {{form.password|add_class:"form-control"|attr:"placeholder:Enter User Password"|add_error_class:"is-invalid"}}
+                        {% for error in form.password.errors %}
+                        <div class="invalid-feedback">{{error}}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">Access Level</h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="form-group">
+                        <label class="col-form-label">Branch</label>
+                        {{form.branch|add_class:"form-control kt-selectpicker"|add_error_class:"is-invalid"}}
+                        {% for error in form.branch.errors %}
+                        <div class="invalid-feedback">{{error}}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Departments</label>
+                        <div class="row">
+                            {% for input in form.department %}
+                            <div class="col-6">
+                                <label class="kt-checkbox">
+                                    {{ input.tag }} {{input.choice_label}}
+                                    <span></span>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% if form.department.errors %}
+                        {% for error in form.department.errors %}
+                        <span class="form-text kt-font-danger">{{error}}</span>
+                        {% endfor %}
+                        {% else %}
+                        <span class="form-text text-muted">Select one or more department</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'vendors/bootstrap-select/dist/js/bootstrap-select.min.js'%}"></script>
+<script src="{% static 'vendors/metronic/widgets/bootstrap-select.min.js'%}"></script>
+<script src="{% static 'vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'%}"></script>
+<script src="{% static 'vendors/metronic/widgets/bootstrap-datepicker.js'%}"></script>
+{% endblock scripts %}
+
+
+
+
+<div class="form-group row">
+    <div class="col-lg-4">
+        <label class="col-form-label">Title</label>
+        {{form.title|add_class:"form-control kt-selectpicker"|add_error_class:"is-invalid"}}
+        {% for error in form.title.errors %}
+        <div class="invalid-feedback">{{error}}</div>
+        {% endfor %}
+    </div>
+    
+    <div class="col-lg-4">
+        <label class="col-form-label">Department</label>
+        {{form.department|add_class:"form-control kt-selectpicker"|add_error_class:"is-invalid"}}
+        {% for error in form.department.errors %}
+        <div class="invalid-feedback">{{error}}</div>
+        {% endfor %}
+    </div>
+</div>

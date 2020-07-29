@@ -1,0 +1,50 @@
+{% extends 'layout/admin.html' %}
+{% load static %}
+
+
+{% block left_subheader %}
+<button class="kt-subheader__mobile-toggle kt-subheader__mobile-toggle--left"
+    id="kt_subheader_mobile_toggle"><span></span></button>
+<h3 class="kt-subheader__title">
+    {% if request.session.profile.pk == profile.pk %}
+    My Profile
+    {% else %}
+    {{profile.full_name}}
+    {% endif %}
+</h3>
+<span class="kt-subheader__separator kt-hidden"></span>
+<div class="kt-subheader__breadcrumbs">
+    <a href="#" class="kt-subheader__breadcrumbs-home">
+        <i class="flaticon2-shelter"></i>
+    </a>
+    <span class="kt-subheader__breadcrumbs-separator"></span>
+    <a href="{% url 'customer_service:manage_list' %}" class="kt-subheader__breadcrumbs-link">Customer Service</a>
+</div>
+{% endblock left_subheader %}
+
+{% block content %}
+<div class="kt-content kt-grid__item kt-grid__item--fluid" id="kt_content">
+    <!--Begin::App-->
+    <div class="kt-grid kt-grid--desktop kt-grid--ver kt-grid--ver-desktop kt-app">
+        <!--Begin:: App Aside Mobile Toggle-->
+        <button class="kt-app__aside-close" id="kt_user_profile_aside_close">
+            <i class="la la-close"></i>
+        </button>
+        <!--End:: App Aside Mobile Toggle-->
+
+        <!--Begin:: App Aside-->
+        {% include 'customer_service/profile/aside.html' %}
+        <!--End:: App Aside-->
+
+        <!--Begin:: App Content-->
+        <div class="kt-grid__item kt-grid__item--fluid kt-app__content">{% block profile_content %}{% endblock %}</div>
+        <!--End:: App Content-->
+    </div>
+    <!--End::App-->
+</div>
+{% endblock content %}
+
+
+{% block scripts %}
+<script src="{% static 'vendors/metronic/pages/profile.js' %}"></script>
+{% endblock scripts %}

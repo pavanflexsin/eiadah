@@ -1,0 +1,90 @@
+{% extends 'customer_service/profile/layout.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'vendors/bootstrap-select/dist/css/bootstrap-select.min.css' %}">
+<style type="text/css">
+ .alert-default{
+    padding: 15px;
+    border-radius: 5px;
+    width: 90%;
+    margin: 0 auto;
+ }
+ .close-btn{
+    cursor: pointer;
+ }
+
+</style>
+{% endblock styles %}
+
+{% block top_header %}
+{% if messages %}
+    {% for msg in messages %}
+        <div class="alert-success alert-default success_msg">
+            <strong>{{msg}}</strong>
+            <i class="flaticon-close pull-right close-btn"></i>
+          </div>
+    {% endfor %}
+{% endif %}
+{% endblock top_header %}
+
+{% block profile_content %}
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                Account Information
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="kt-widget12">
+            <div class="kt-widget12__content">
+                <div class="kt-widget12__item">
+                    <div class="kt-widget12__info">
+                        <span class="kt-widget12__desc">Medical Center</span>
+                        <span class="kt-widget12__value">{{profile.branch.center.name}}</span>
+                    </div>
+                    <div class="kt-widget12__info">
+                        <span class="kt-widget12__desc">Branch</span>
+                        <span class="kt-widget12__value">{{profile.branch.name}}</span>
+                    </div>
+                </div>
+
+                <div class="kt-widget12__item">
+                    <div class="kt-widget12__info">
+                        <span class="kt-widget12__desc">English Full Name</span>
+                        <span class="kt-widget12__value">{{profile.first_name_en}} {{profile.last_name_en}}</span>
+                    </div>
+                    <div class="kt-widget12__info">
+                        <span class="kt-widget12__desc">Arabic Full Name</span>
+                        <span class="kt-widget12__value">{{profile.first_name_ar}} {{profile.last_name_ar}}</span>
+                    </div>
+                </div>
+
+                <div class="kt-widget12__item">
+                    <div class="kt-widget12__info">
+                        <span class="kt-widget12__desc">Access Department</span>
+                        {% for department in profile.department.all %}
+                        <span class="kt-widget12__value">{{department.title}}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock profile_content %}
+
+{% block scripts %}
+
+<script src="{% static 'vendors/jquery-form/dist/jquery.form.min.js' %}"></script> 
+<script type="text/javascript">
+       $('.close-btn').click(function() {
+          $('.success_msg').hide();
+       })
+       $('.success_msg').fadeOut(10000);
+</script>
+
+{% endblock scripts %}
+

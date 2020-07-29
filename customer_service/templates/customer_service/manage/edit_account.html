@@ -1,0 +1,79 @@
+{% extends 'customer_service/profile/layout.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'vendors/bootstrap-select/dist/css/bootstrap-select.min.css'%}">
+{% endblock styles %}
+
+{% block profile_content %}
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">Account Information <small>update your Account informaiton</small></h3>
+        </div>
+    </div>
+
+    <form class="kt-form kt-form--label-right" method="post">
+        {% csrf_token %}
+        <div class="kt-portlet__body">
+            <div class="kt-section kt-section--first">
+                <div class="kt-section__body">
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">User Name</label>
+                        <div class="col-lg-9 col-xl-6">
+                            {{form.username|add_class:"form-control"|attr:"placeholder:Enter User Name"|add_error_class:"is-invalid"}}
+                            {% for error in form.username.errors %}
+                            <div class="invalid-feedback">{{error}}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">Phone Number</label>
+                        <div class="col-lg-9 col-xl-6">
+                            {{form.phone_number|add_class:"form-control"|attr:"placeholder:Enter User Phone Number"|add_error_class:"is-invalid"}}
+                            {% for error in form.phone_number.errors %}
+                            <div class="invalid-feedback">{{error}}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">Account Status</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <div class="kt-checkbox-single">
+                                <label class="kt-checkbox">
+                                    {{form.active|add_class:"form-control"}} Active and Inactive Account.
+                                    <span></span>
+                                </label>
+                            </div>
+                            <span class="form-text text-muted">
+                                if this account became inactive it will be hidden from all apps and patient can't view
+                                this account
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="kt-portlet__foot">
+            <div class="kt-form__actions">
+                <div class="row">
+                    <div class="col-lg-3 col-xl-3"></div>
+                    <div class="col-lg-9 col-xl-9">
+                        <button type="submit" class="btn btn-success">Submit</button>&nbsp;
+                        <button type="reset" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock profile_content %}
+
+
+{% block scripts %}
+{{block.super}}
+<script src="{% static 'vendors/bootstrap-select/dist/js/bootstrap-select.min.js'%}"></script>
+<script src="{% static 'vendors/metronic/widgets/bootstrap-select.min.js'%}"></script>
+{% endblock scripts %}

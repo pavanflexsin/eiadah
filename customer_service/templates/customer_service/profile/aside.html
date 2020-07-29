@@ -1,0 +1,201 @@
+{% load static %}
+{% load active_link_tags %}
+
+
+<div class="kt-grid__item kt-app__toggle kt-app__aside" id="kt_user_profile_aside" style="opacity: 1;">
+    <!--begin:: Widgets/Applications/User/Profile1-->
+    <div class="kt-portlet kt-portlet--height-fluid-">
+        <div class="kt-portlet__head  kt-portlet__head--noborder">
+            <div class="kt-portlet__head-label">
+                <h3 class="kt-portlet__head-title">
+                </h3>
+            </div>
+        </div>
+
+        <div class="kt-portlet__body kt-portlet__body--fit-y">
+            <!--begin::Widget -->
+            <div class="kt-widget kt-widget--user-profile-1">
+                <div class="kt-widget__head">
+                    <div class="kt-widget__media">
+                        {% if profile.image %}
+                        <img src="{{profile.image.url}}" alt="{{profile.user.username}}">
+                        {% else %}
+                        <img alt="avatar" src="{% static 'images/avatar.jpg' %}" />
+                        {% endif %}
+                    </div>
+                    <div class="kt-widget__content">
+                        <div class="kt-widget__section">
+                            <a href="#" class="kt-widget__username">
+                                {{profile.user.username}}
+                                {% comment %} {% if profile.is_active %}
+                                <i class="flaticon2-correct kt-font-success"></i>
+                                {% endif %} {% endcomment %}
+                            </a>
+                            <span class="kt-widget__subtitle">
+                                {% comment %} {{profile.branch.name}} {% endcomment %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-widget__body">
+                    <div class="kt-widget__content">
+                        <div class="kt-widget__info">
+                            <span class="kt-widget__label">Email:</span>
+                            <span class="kt-widget__data">{{profile.email}}</span>
+                        </div>
+                        <div class="kt-widget__info">
+                            <span class="kt-widget__label">Phone:</span>
+                            <span class="kt-widget__data">{{profile.user.phone_number}}</span>
+                        </div>
+                        <div class="kt-widget__info">
+                            <span class="kt-widget__label">Gender:</span>
+                            <span class="kt-widget__data">{{profile.get_gender_display}}</span>
+                        </div>
+                        <div class="kt-widget__info">
+                            <span class="kt-widget__label">Age:</span>
+                            <span class="kt-widget__data">{{profile.age}}</span>
+                        </div>
+                    </div>
+                    <div class="kt-widget__items">
+                        {% url 'customer_service:profile_overview' profile.pk as overview %}
+                        <a href="{{overview}}"
+                            class="kt-widget__item {% if overview == request.path %}kt-widget__item--active{% endif %}">
+                            <span class="kt-widget__section">
+                                <span class="kt-widget__icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
+                                        class="kt-svg-icon">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <polygon id="Bound" points="0 0 24 0 24 24 0 24"></polygon>
+                                            <path
+                                                d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z"
+                                                id="Shape" fill="#000000" fill-rule="nonzero"></path>
+                                            <path
+                                                d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z"
+                                                id="Path" fill="#000000" opacity="0.3"></path>
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="kt-widget__desc">Profile Overview</span>
+                            </span>
+                        </a>
+                    </div>
+                    
+                    {% if user.role == 4 or user.role == 5 %}
+                    <div class="kt-widget__items">
+                        {% url 'customer_service:manage_edit_account' profile.pk as account %}
+                        <a href="{{account}}"
+                            class="kt-widget__item {% if account == request.path %}kt-widget__item--active{% endif %}">
+                            <span class="kt-widget__section">
+                                <span class="kt-widget__icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
+                                        class="kt-svg-icon">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect id="bound" x="0" y="0" width="24" height="24" />
+                                            <path
+                                                d="M14.1124454,7.00625159 C14.0755336,7.00212117 14.0380145,7 14,7 L10,7 C9.96198549,7 9.92446641,7.00212117 9.88755465,7.00625159 L7.34761705,4.55799196 C6.95060373,4.17530866 6.9382927,3.54346816 7.32009765,3.14561006 L8.41948359,2 L15.5805164,2 L16.6799023,3.14561006 C17.0617073,3.54346816 17.0493963,4.17530866 16.6523829,4.55799196 L14.1124454,7.00625159 Z"
+                                                id="Combined-Shape" fill="#000000" />
+                                            <path
+                                                d="M13.7640285,9 L15.4853424,18.1494183 C15.5450675,18.4668794 15.4477627,18.7936387 15.2240963,19.0267093 L12.7215131,21.6345146 C12.7120098,21.6444174 12.7023037,21.6541236 12.6924008,21.6636269 C12.2939201,22.0460293 11.6608893,22.0329953 11.2784869,21.6345146 L8.77590372,19.0267093 C8.55223728,18.7936387 8.45493249,18.4668794 8.5146576,18.1494183 L10.2359715,9 L13.7640285,9 Z"
+                                                id="Path" fill="#000000" opacity="0.3" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="kt-widget__desc">Account Information</span>
+                            </span>
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    <div class="kt-widget__items">
+                        {% url 'customer_service:edit_profile' profile.pk as personal %}
+                        <a href="{{personal}}"
+                            class="kt-widget__item {% if personal == request.path %}kt-widget__item--active{% endif %}">
+                            <span class="kt-widget__section">
+                                <span class="kt-widget__icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
+                                        class="kt-svg-icon">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect id="bound" x="0" y="0" width="24" height="24" />
+                                            <path
+                                                d="M3,19 L5,19 L5,21 L3,21 L3,19 Z M8,19 L10,19 L10,21 L8,21 L8,19 Z M13,19 L15,19 L15,21 L13,21 L13,19 Z M18,19 L20,19 L20,21 L18,21 L18,19 Z"
+                                                id="Combined-Shape" fill="#000000" opacity="0.3" />
+                                            <path
+                                                d="M10.504,3.256 L12.466,3.256 L17.956,16 L15.364,16 L14.176,13.084 L8.65000004,13.084 L7.49800004,16 L4.96000004,16 L10.504,3.256 Z M13.384,11.14 L11.422,5.956 L9.42400004,11.14 L13.384,11.14 Z"
+                                                id="A" fill="#000000" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="kt-widget__desc">Personal Information</span>
+                            </span>
+                        </a>
+                    </div>
+
+                    {% if request.session.profile == profile %}
+                    <div class="kt-widget__items">
+                        {% url 'customer_service:edit_password' profile.pk as password %}
+                        <a href="{{password}}"
+                            class="kt-widget__item {% if password == request.path %}kt-widget__item--active{% endif %}">
+                            <span class="kt-widget__section">
+                                <span class="kt-widget__icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
+                                        class="kt-svg-icon">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect id="bound" x="0" y="0" width="24" height="24"></rect>
+                                            <path
+                                                d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z"
+                                                id="Path-50" fill="#000000" opacity="0.3"></path>
+                                            <path
+                                                d="M12,11 C10.8954305,11 10,10.1045695 10,9 C10,7.8954305 10.8954305,7 12,7 C13.1045695,7 14,7.8954305 14,9 C14,10.1045695 13.1045695,11 12,11 Z"
+                                                id="Mask" fill="#000000" opacity="0.3"></path>
+                                            <path
+                                                d="M7.00036205,16.4995035 C7.21569918,13.5165724 9.36772908,12 11.9907452,12 C14.6506758,12 16.8360465,13.4332455 16.9988413,16.5 C17.0053266,16.6221713 16.9988413,17 16.5815,17 C14.5228466,17 11.463736,17 7.4041679,17 C7.26484009,17 6.98863236,16.6619875 7.00036205,16.4995035 Z"
+                                                id="Mask-Copy" fill="#000000" opacity="0.3"></path>
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="kt-widget__desc">Change Password</span>
+                            </span>
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if not request.session.profile == profile %}
+                    <div class="kt-widget__items">
+                        {% url 'customer_service:edit_department' profile.pk as department %}
+                        <a href="{{department}}"
+                            class="kt-widget__item {% if department == request.path %}kt-widget__item--active{% endif %}">
+                            <span class="kt-widget__section">
+                                <span class="kt-widget__icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
+                                        class="kt-svg-icon">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect id="bound" x="0" y="0" width="24" height="24"></rect>
+                                            <path
+                                                d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z"
+                                                id="Path-50" fill="#000000" opacity="0.3"></path>
+                                            <path
+                                                d="M12,11 C10.8954305,11 10,10.1045695 10,9 C10,7.8954305 10.8954305,7 12,7 C13.1045695,7 14,7.8954305 14,9 C14,10.1045695 13.1045695,11 12,11 Z"
+                                                id="Mask" fill="#000000" opacity="0.3"></path>
+                                            <path
+                                                d="M7.00036205,16.4995035 C7.21569918,13.5165724 9.36772908,12 11.9907452,12 C14.6506758,12 16.8360465,13.4332455 16.9988413,16.5 C17.0053266,16.6221713 16.9988413,17 16.5815,17 C14.5228466,17 11.463736,17 7.4041679,17 C7.26484009,17 6.98863236,16.6619875 7.00036205,16.4995035 Z"
+                                                id="Mask-Copy" fill="#000000" opacity="0.3"></path>
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="kt-widget__desc">Departments</span>
+                            </span>
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <!--end::Widget -->
+        </div>
+    </div>
+    <!--end:: Widgets/Applications/User/Profile1-->
+</div>
